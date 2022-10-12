@@ -13,11 +13,11 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'];
+        $tags = ['informatica', 'programmazione', 'database'];
 
         foreach ($tags as $tag) {
             $newtag = new Tag();
-            $newtag->name = $newtag;
+            $newtag->name = $tag;
             $newtag->slug = Str::slug($tag);
             $newtag->save();    
         }

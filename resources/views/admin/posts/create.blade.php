@@ -27,6 +27,18 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="tag">Tag</label>
+                  @foreach ($tags as $tag)
+                    <div class="mb-3 form-check">
+                      <input value="{{ $tag->id }}" name="tags[]" type="checkbox" class="form-check-input" id="{{ $tag->id }}">
+                      <label class="form-check-label" for="{{ $tag->id }}">{{ $tag->name }}</label>
+                    </div>
+                  @endforeach
+                </div>
+
+                
+
+                <div class="form-group">
                   <select name="category_id" id="category_id" class="form-controll @error('title') is-invalid @enderror">
                     <option value="">Nessuna Categoria</option>
                     @foreach ($categories as $category)
