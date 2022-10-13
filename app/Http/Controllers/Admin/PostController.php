@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Str;
 use App\Tag;
+use Illuminate\Support\Facades\Redirect;
+
 class PostController extends Controller
 {
     /**
@@ -18,7 +20,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('admin.posts.index', compact('posts'));
+        $tags = Tag::all();
+        return view('admin.posts.index', compact('posts', 'tags'));
     }
 
     /**
@@ -87,7 +90,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -101,7 +105,9 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'content' => 'required|max:65535'
+            'content' => 'required|max:65535',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'exists:tags,id',
         ]);
 
         $data = $request->all();
@@ -112,7 +118,14 @@ class PostController extends Controller
 
         $post->update($data);
 
-        return redirect()->route('admin.posts.index');
+        if (array_key_exists('tags', $data)) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->sync([]);
+        }
+
+        // return redirect()->route('admin.posts.index');
+        return Redirect::to(route('admin.posts.index'));
     }
 
     /**

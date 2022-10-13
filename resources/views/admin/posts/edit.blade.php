@@ -31,6 +31,33 @@
                 </div>
 
                 <div class="form-group">
+                  {{-- <label for="tag">Tag</label>
+                  @foreach ($tags as $tag)
+                    <div class="mb-3 form-check">
+                      <input {{ (in_array($tag->id, old('tags', [])))?'checked':'' }} value="{{ $tag->id }}" name="tags[]" type="checkbox" class="form-check-input" id="{{ $tag->id }}">
+                      <label class="form-check-label" for="{{ $tag->id }}">{{ $tag->name }}</label>
+                    </div>
+                  @endforeach --}}
+
+                  @foreach ($tags as $tag)
+                    <div class="form-group form-check">
+                        @if ($errors->any())
+                            <input {{(in_array($tag->id, old('tags', [])))?'checked':''}} name="tags[]" type="checkbox" class="form-check-input" id="{{$tag->id}}" value="{{$tag->id}}">
+                        @else
+                            <input {{($post->tags->contains($tag))?'checked':''}} name="tags[]" type="checkbox" class="form-check-input" id="{{$tag->id}}"value="{{$tag->id}}">
+                        @endif
+                        <label class="form-check-label" for="{{$tag->id}}">{{$tag->name}}</label>
+                    </div>
+                @endforeach
+
+                @error('tags')
+                    <div class="alert alert-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+                </div>
+
+                <div class="form-group">
                   <select name="category_id" id="category_id" class="form-controll @error('title') is-invalid @enderror">
                     <option {{ (old('category_id', $post->category_id)==""?'selected':'') }} value="">Nessuna Categoria</option>
                     @foreach ($categories as $category)
