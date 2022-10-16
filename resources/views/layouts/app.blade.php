@@ -35,7 +35,9 @@
                     <ul class="navbar-nav mr-auto">
 
                         <li>
-                            <a href="{{ route('admin.tags.index') }}">Gestione Tag</a>
+                            <a class="mx-3" href="{{ route('admin.posts.index') }}">Gestione Post</a>
+                            <a class="mx-3" href="{{ route('admin.tags.index') }}">Gestione Tag</a>
+                            <a class="mx-3" href="{{ route('admin.categories.index') }}">Gestione Categorie</a>
                         </li>
 
                     </ul>
