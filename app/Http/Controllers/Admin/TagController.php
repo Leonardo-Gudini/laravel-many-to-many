@@ -48,7 +48,8 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        $tags=Tag::find($id);
+        return view('admin.tags.show', compact('tags'));
     }
 
     /**
